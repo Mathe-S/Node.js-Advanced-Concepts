@@ -3,27 +3,27 @@ let page;
 
 beforeEach(async () => {
     page = await Page.build();
-    await page.goto('localhost:3000');
+    await page.goto('http://localhost:3000');
 });
 
 afterEach(async () => {
     await page.close();
 });
 
-test.skip('The header has the correct text', async () => {
+test('The header has the correct text', async () => {
     const text = await page.getContentsOf('a.brand-logo');
 
     expect(text).toEqual('Blogster');
 });
 
-test.skip('clicking login starts oauth flow', async () => {
+test('clicking login starts oauth flow', async () => {
     await page.click('.right a');
     const url = await page.url();
 
     expect(url).toMatch(/accounts\.google\.com/);
 });
 
-test.skip('when signed in, show logout button', async () => {
+test('when signed in, show logout button', async () => {
     await page.login();
 
     const text = await page.getContentsOf('a[href="/auth/logout"]');

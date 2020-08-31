@@ -4,7 +4,7 @@ let page;
 
 beforeEach(async () => {
     page = await Page.build();
-    await page.goto('localhost:3000');
+    await page.goto('http://localhost:3000');
 });
 
 
@@ -16,11 +16,11 @@ afterEach(async () => {
 describe('When logged in', async () => {
     beforeEach(async () => {
     await page.login();
-    await page.goto('localhost:3000/blogs');
+    await page.goto('http://localhost:3000/blogs');
     await page.click('a.btn-floating');
     });
 
-    test.skip('When logged in, can see blog creation form', async () => {
+    test('When logged in, can see blog creation form', async () => {
         const label = await page.getContentsOf('form label');
         expect(label).toEqual('Blog Title');
     });
@@ -32,12 +32,12 @@ describe('When logged in', async () => {
             await page.click('form button');
         });
 
-        test.skip('Submitting takes user to review screen', async () => {
+        test('Submitting takes user to review screen', async () => {
             const text = await page.getContentsOf('form h5');
 
             expect(text).toEqual('Please confirm your entries');
         });
-        test.skip('Submitting then saving adds blog to index page', async () => {
+        test('Submitting then saving adds blog to index page', async () => {
             await page.click('button.green');
             await page.waitFor('.card');
 
@@ -54,7 +54,7 @@ describe('When logged in', async () => {
             await page.click('form button');
         });
 
-        test.skip('the form shows an error message', async () => {
+        test('the form shows an error message', async () => {
             const titleText = await page.getContentsOf('.title .red-text');
             const contentText = await page.getContentsOf('.content .red-text');
 
@@ -67,7 +67,7 @@ describe('When logged in', async () => {
 
 
 describe('User is not logged in', async () => {
-    test.skip('user cannot create blog posts', async () => {
+    test('user cannot create blog posts', async () => {
        const result = await page.evaluate(
             () => {
                 return fetch('/api/blogs', {
